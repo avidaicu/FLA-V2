@@ -1,0 +1,101 @@
+<div class="find-an-agent">
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="field-group">
+
+          <mat-form-field class="example-full-width">
+            <input type="text"
+                  matInput
+                  [formControl]="countrySearch"
+                  [matAutocomplete]="auto">
+            <mat-placeholder class="placeholder">Find an agent by country</mat-placeholder>
+            <mat-autocomplete #auto="matAutocomplete" >
+              <mat-option
+                *ngFor="let country of countries$"
+                [value]="country.Name"
+                (onSelectionChange)="onCountrySelect(country)">
+                <p [innerHTML]="country.Name"></p>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <!-- <mat-form-field class="example-full-width">
+            <input type="text"
+                  matInput
+                  [formControl]="citySearch"
+                  [matAutocomplete]="autoTest">
+            <mat-placeholder class="placeholder">Find an agent by city</mat-placeholder>
+            <mat-autocomplete #autoTest="matAutocomplete" >
+              <mat-option
+                *ngFor="let city of filteredCities$"
+                [value]="city.Cities">
+                <p [innerHTML]="city.Cities"></p>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field> -->
+
+            <ul>
+              <li
+                *ngFor="let city of filteredCities$">
+                <p>{{city.Cities}}</p>
+              </li>
+            </ul>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- <mat-progress-bar mode="indeterminate" *ngIf="showLoadingBar"></mat-progress-bar> -->
+
+    <!-- Grid Layout -->
+    <div class="grid-view">
+      <div id="agents-list" class="row agents-list">
+
+        <mat-card class="col-md-12"
+            *ngFor="let agent of filteredAgents$" [ngClass]="{'active': parentDetails, 'content-padding' : agent.ParentAgentName || agent.ParentAgentStreet || agent.ParentAgentCity || agent.ParentAgentState || agent.ParentAgentPostcode || agent.ParentAgentCountry  || agent.ParentAgentContact || agent.ParentAgentWebsite }">
+          <mat-card-title>{{agent.Name}}</mat-card-title>
+          <mat-card-subtitle>{{agent.Addr1}}</mat-card-subtitle>
+          <mat-card-content>
+            <ul>
+              <li *ngIf="agent.City">{{agent.City}}</li>
+              <li *ngIf="agent.Postcode">{{agent.Postcode}}</li>
+              <li *ngIf="agent.State">{{agent.State}}</li>
+            </ul>
+            <p>Contact Person: {{agent.ContactName}}</p>
+            <p *ngIf="agent.URL">Website: <a href="{{agent.URL}}">{{agent.URL}}</a></p>
+          </mat-card-content>
+          <mat-card-footer *ngIf="agent.ParentAgentName || agent.ParentAgentStreet || agent.ParentAgentCity || agent.ParentAgentState || agent.ParentAgentPostcode || agent.ParentAgentCountry  || agent.ParentAgentContact || agent.ParentAgentWebsite">
+            <a class="parent-toggle" (click)="toggle()" mat-button color="primary">
+              <ng-container *ngIf="!parentDetails">
+                <i class="fa fa-plus-circle"></i>View agency for this branch office
+              </ng-container>
+              <ng-container *ngIf="parentDetails">
+                <i class="fa fa-minus-circle"></i>Hide agency for this branch office
+              </ng-container>
+            </a>
+
+            <ng-container *ngIf="parentDetails">
+              <ul>
+                <li *ngIf="agent.ParentAgentName"><strong>{{agent.ParentAgentName}}</strong></li>
+                  <ul>
+                    <li *ngIf="agent.ParentAgentStreet">{{agent.ParentAgentStreet}}</li>
+                    <li *ngIf="agent.ParentAgentCity">{{agent.ParentAgentCity}}</li>
+                    <li *ngIf="agent.ParentAgentState">{{agent.ParentAgentState}}</li>
+                    <li *ngIf="agent.ParentAgentPostcode">{{agent.ParentAgentPostcode}}</li>
+                    <li *ngIf="agent.ParentAgentCountry">{{agent.ParentAgentCountry}}</li>
+                  </ul>
+                <li *ngIf="agent.ParentAgentContact">Contact: {{agent.ParentAgentContact}}</li>
+                <li *ngIf="agent.ParentAgentWebsite">Website: {{agent.ParentAgentWebsite}}</li>
+              </ul>
+            </ng-container>
+          </mat-card-footer>
+        </mat-card>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>
