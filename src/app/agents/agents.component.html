@@ -6,7 +6,7 @@
         <div class="field-group">
 
           <mat-form-field class="example-full-width">
-            <input type="text"
+            <input type="text" #country
                   matInput
                   [formControl]="countrySearch"
                   [matAutocomplete]="auto">
@@ -21,7 +21,7 @@
             </mat-autocomplete>
           </mat-form-field>
 
-          <!-- <mat-form-field class="example-full-width">
+          <mat-form-field class="example-full-width">
             <input type="text"
                   matInput
                   [formControl]="citySearch"
@@ -29,19 +29,17 @@
             <mat-placeholder class="placeholder">Find an agent by city</mat-placeholder>
             <mat-autocomplete #autoTest="matAutocomplete" >
               <mat-option
-                *ngFor="let city of filteredCities$"
-                [value]="city.Cities">
-                <p [innerHTML]="city.Cities"></p>
+                *ngFor="let city of cities$"
+                [value]="city"
+                (click)="onCitySelect(city)">
+                <p [innerHTML]="city"></p>
               </mat-option>
             </mat-autocomplete>
-          </mat-form-field> -->
+          </mat-form-field>
 
-            <ul>
-              <li
-                *ngFor="let city of filteredCities$">
-                <p>{{city.Cities}}</p>
-              </li>
-            </ul>
+          <!-- <ul>
+            <li *ngFor="let city of filteredCities$; let i = index">{{city}}</li>
+          </ul> -->
 
         </div>
       </div>
